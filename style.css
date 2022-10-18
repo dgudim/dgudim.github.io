@@ -87,6 +87,7 @@ main {
 	height: 90px;
 	width: 90px;
 	display: block;
+	background: black;
 	border-radius: 5pt 0 5pt 40%;
 	border-bottom: 2pt solid #3c002dff;
 	border-left: 2pt solid #3c002dff;

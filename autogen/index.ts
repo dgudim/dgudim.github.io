@@ -67,7 +67,7 @@ const repos_full = (await Promise.allSettled(repos.map(repo => {
                 lang_color: repo.lang_color,
                 stars: repo.stars,
                 forks: repo.forks,
-                full_name: repo.name == project_name ? project_name : `${project_name}(${repo.name})`,
+                full_name: repo.name == project_name ? project_name : `${project_name} (${repo.name})`,
                 icon: document.querySelector("#user-content-icon")?.getAttribute("src"),
                 thumbnail: document.querySelector("#user-content-thumb")?.getAttribute("src")
             } as RepoData;
@@ -94,7 +94,7 @@ let htmlPage =
 
 	<head>
 		<title>KLOUD'S github projects</title>
-		<link rel="stylesheet" type="text/css" href="styles.css">
+		<link rel="stylesheet" type="text/css" href="style.css">
 		<link rel="stylesheet" type="text/css"
 			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 		<meta charset="utf-8">
