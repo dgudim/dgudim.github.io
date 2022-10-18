@@ -1,0 +1,152 @@
+body {
+	background-color: #3C002D;
+	font-family: sans-serif;
+}
+
+a {
+	color: black;
+	text-decoration: none;
+	width: 100%;
+}
+
+main {
+	max-width: 1000pt;
+	margin: auto;
+}
+
+.slab {
+	margin: 3pt;
+	background-color: #fff;
+	padding: 7pt;
+	border-radius: 5pt;
+	display: flex;
+	flex-direction: column;
+}
+
+.big {
+	flex: 1;
+	width: auto;
+}
+
+.repo_card {
+	border: 2pt solid #3c002dff;
+	border-radius: 5pt;
+	width: 100%;
+	box-shadow: 0 3pt 1pt #9c9c9c88, 2pt 2pt 1pt #9c9c9c88;
+	background: rgb(180, 180, 180);
+	display: flex;
+	flex-wrap: nowrap;
+}
+
+.slab > a + a {
+	margin-top: 10pt
+}
+
+.repo_thumbnail {
+	min-height: 150px;
+	width: 350px;
+	border-radius: 3pt 0 0 3pt;
+	display: block;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+}
+
+.repo_card_inner {
+	border-left: 2pt solid #3c002dff;
+	padding: 3pt;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	padding: 6pt
+}
+
+.titleText {
+	margin-top: 2pt
+}
+
+.repo_text_container {
+	padding-bottom: 10pt;
+}
+
+.repo_stats {
+	margin-top: auto;
+	display: flex;
+}
+
+.repo_stats>div {
+	margin-right: 20pt;
+}
+
+.repo_small_thumbnail {
+	display: flex;
+	flex-direction: column;
+}
+
+.repo_small_thumbnail img {
+	height: 90px;
+	width: 90px;
+	display: block;
+	border-radius: 5pt 0 5pt 40%;
+	border-bottom: 2pt solid #3c002dff;
+	border-left: 2pt solid #3c002dff;
+}
+
+.repo_small_thumbnail em {
+	margin: auto;
+}
+
+.repo_lang {
+	display: flex;
+}
+
+.lang_icon {
+	width: 15px;
+	height: 15px;
+	border-radius: 50%;
+	border: 1pt solid gray;
+}
+
+.lang_text {
+	margin-top: auto;
+	margin-left: 2pt;
+}
+
+.center {
+	margin: auto
+}
+
+.gitbutton {
+	text-align: left;
+	background-color: #000;
+	max-width: 45pt
+}
+
+.largeText {
+	font-size: x-large;
+}
+
+.xlargeText {
+	font-size: xx-large;
+}
+
+.flex {
+	display: flex;
+	flex-flow: row wrap;
+	margin: auto;
+	padding: 0;
+}
+
+.avatar {
+	width: 70px;
+	height: 70px;
+	border-radius: 50%
+}
+
+.hov {
+	transition: transform .2s;
+}
+
+.hov:hover {
+	transform: scale(1.1);
+}
