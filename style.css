@@ -18,6 +18,14 @@ main {
 	margin: auto;
 }
 
+.largeText {
+	font-size: x-large;
+}
+
+.xlargeText {
+	font-size: xx-large;
+}
+
 .slab {
 	margin: 3pt;
 	background-color: #fff;
@@ -25,6 +33,10 @@ main {
 	border-radius: 5pt;
 	display: flex;
 	flex-direction: column;
+}
+
+.slab>a+a {
+	margin-top: 10pt
 }
 
 .big {
@@ -42,13 +54,14 @@ main {
 	flex-wrap: nowrap;
 }
 
-.slab > a + a {
-	margin-top: 10pt
+.repo_card_adaptive {
+	display: flex;
+	width: 100%;
 }
 
 .repo_thumbnail {
 	min-height: 150px;
-	width: 350px;
+	min-width: 250px;
 	border-radius: 3pt 0 0 3pt;
 	display: block;
 	background-repeat: no-repeat;
@@ -101,6 +114,51 @@ main {
 	margin: auto;
 }
 
+@media only screen and (max-width: 800px) {
+	.xlargeText {
+		font-size: x-large;
+	}
+
+	.slab {
+		margin: 2pt;
+		padding: 3pt;
+	}
+
+	.repo_card_inner{
+		border-left: none
+	}
+
+	.repo_card_adaptive {
+		flex-direction: column;
+	}
+
+	.repo_thumbnail {
+		border-radius: 3pt 0 7pt 3pt;
+		margin-right: 5pt;
+	}
+
+	.repo_small_thumbnail img {
+		height: 70px;
+		width: 70px;
+	}
+
+	.repo_small_thumbnail em {
+		margin-bottom: 5pt;
+	}	
+}
+
+@media only screen and (max-width: 600px) {
+	.repo_small_thumbnail {
+		display: none
+	}
+
+	.repo_thumbnail {
+		border-radius: 0;
+		margin: 0;
+		min-width: 25px;
+	}
+}
+
 .repo_lang {
 	display: flex;
 }
@@ -121,20 +179,6 @@ main {
 
 .center {
 	margin: auto
-}
-
-.gitbutton {
-	text-align: left;
-	background-color: #000;
-	max-width: 45pt
-}
-
-.largeText {
-	font-size: x-large;
-}
-
-.xlargeText {
-	font-size: xx-large;
 }
 
 .flex {

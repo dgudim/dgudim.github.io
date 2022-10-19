@@ -132,27 +132,30 @@ for (const repo_data of repos_full) {
                 <a href="${repo_data.url}">
                     <div data-repo="${repo_data.username_and_repo}" class="repo_card" style="background: linear-gradient(25deg, rgb(170, 170, 170) 52%, ${repo_data.lang_color} 100%);">
 
-                        <div class="repo_thumbnail"
-                            style="background-image: url('${repo_data.thumbnail}')">
-                        </div>
+                        <div class="repo_card_adaptive">
 
-                        <div class="repo_card_inner">
-                            <div class="repo_text_container">
-                                <h2 class="titleText">${repo_data.full_name}</h2>
-                                <span class="descriptionText" id="${repo_data.html_id}_description">${repo_data.description}</span>
+                            <div class="repo_thumbnail"
+                                style="background-image: url('${repo_data.thumbnail}')">
                             </div>
-                            <div class="repo_stats">
-                                <div class="repo_lang">
-                                    <div class="lang_icon" style="background: ${repo_data.lang_color};"></div>
-                                    <span class="stats_text">${repo_data.lang}</span>
+
+                            <div class="repo_card_inner">
+                                <div class="repo_text_container">
+                                    <h2 class="titleText">${repo_data.full_name}</h2>
+                                    <span class="descriptionText" id="${repo_data.html_id}_description">${repo_data.description}</span>
                                 </div>
-                                <div class="repo_stars">
-                                    <em class="fa-regular fa-star"></em>
-                                    <span class="stats_text" id="${repo_data.html_id}_stars">${repo_data.stars}</span>
-                                </div>
-                                <div class="repo_forks">
-                                    <em class="fa-solid fa-code-fork"></em>
-                                    <span class="stats_text" id="${repo_data.html_id}_forks">${repo_data.forks}</span>
+                                <div class="repo_stats">
+                                    <div class="repo_lang">
+                                        <div class="lang_icon" style="background: ${repo_data.lang_color};"></div>
+                                        <span class="stats_text">${repo_data.lang}</span>
+                                    </div>
+                                    <div class="repo_stars">
+                                        <em class="fa-regular fa-star"></em>
+                                        <span class="stats_text" id="${repo_data.html_id}_stars">${repo_data.stars}</span>
+                                    </div>
+                                    <div class="repo_forks">
+                                        <em class="fa-solid fa-code-fork"></em>
+                                        <span class="stats_text" id="${repo_data.html_id}_forks">${repo_data.forks}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
