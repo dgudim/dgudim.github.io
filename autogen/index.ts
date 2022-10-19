@@ -106,6 +106,8 @@ let htmlPage =
 		<link rel="stylesheet" type="text/css" href="style.css">
 		<link rel="stylesheet" type="text/css"
 			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta charset="utf-8">
 
 		<link rel="shortcut icon" href="https://avatars.githubusercontent.com/u/34401005?v=4" type="image/png" radius>
