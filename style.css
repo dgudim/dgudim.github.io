@@ -1,9 +1,17 @@
+:root {
+	--accent-color: #5e2f14;
+	--lang-icon-border-color: #808080;
+	--slab-color: rgb(255, 239, 204);
+	--repo-card-bg-color: #b4b4b4;
+	--box-shadow-color: #5e000088;
+}
+
 * {
 	box-sizing: border-box;
 }
 
 body {
-	background-color: #3C002D;
+	background-color: var(--accent-color);
 	font-family: sans-serif;
 }
 
@@ -28,7 +36,7 @@ main {
 
 .slab {
 	margin: 3pt;
-	background-color: #fff;
+	background-color: var(--slab-color);
 	padding: 7pt;
 	border-radius: 5pt;
 	display: flex;
@@ -45,11 +53,11 @@ main {
 }
 
 .repo_card {
-	border: 2pt solid #3c002dff;
+	border: 2pt solid var(--accent-color);
 	border-radius: 5pt;
 	width: 100%;
-	box-shadow: 0 3pt 1pt #9c9c9c88, 2pt 2pt 1pt #9c9c9c88;
-	background: rgb(180, 180, 180);
+	box-shadow: 0 3pt 1pt var(--box-shadow-color), 2pt 2pt 1pt var(--box-shadow-color);
+	background: var(--repo-card-bg-color);
 	display: flex;
 	flex-wrap: nowrap;
 }
@@ -70,7 +78,7 @@ main {
 }
 
 .repo_card_inner {
-	border-left: 2pt solid #3c002dff;
+	border-left: 2pt solid var(--accent-color);
 	padding: 3pt;
 	width: 100%;
 	display: flex;
@@ -106,8 +114,8 @@ main {
 	display: block;
 	background: black;
 	border-radius: 5pt 0 5pt 40%;
-	border-bottom: 2pt solid #3c002dff;
-	border-left: 2pt solid #3c002dff;
+	border-bottom: 2pt solid var(--accent-color);
+	border-left: 2pt solid var(--accent-color);
 }
 
 .repo_small_thumbnail em {
@@ -168,7 +176,7 @@ main {
 	height: 15px;
 	margin: auto 0;
 	border-radius: 50%;
-	border: 1pt solid gray;
+	border: 1pt solid var(--lang-icon-border-color);
 }
 
 .stats_text {
