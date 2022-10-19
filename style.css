@@ -1,3 +1,7 @@
+* {
+	box-sizing: border-box;
+}
+
 body {
 	background-color: #3C002D;
 	font-family: sans-serif;
@@ -104,13 +108,15 @@ main {
 .lang_icon {
 	width: 15px;
 	height: 15px;
+	margin: auto 0;
 	border-radius: 50%;
 	border: 1pt solid gray;
 }
 
-.lang_text {
-	margin-top: auto;
+.stats_text {
+	margin: auto 0;
 	margin-left: 2pt;
+	line-height: 0;
 }
 
 .center {
