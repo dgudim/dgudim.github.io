@@ -172,6 +172,14 @@ for (const repo_data of repos_full) {
 
 htmlPage += `
             </div>
+
+            <div class="slab big" id="portal_slab">
+                <span class="xlargeText center">Click the portal to go back</span>
+                <a href="https://github.com/dgudim#user-content-portal">
+                    <img id="portal" src="https://media.tenor.com/fWA2N8CPWEkAAAAi/sonic-mania.gif" alt="portal">
+                </a>
+            </div>
+
         </main>
     </body>
 </html>`

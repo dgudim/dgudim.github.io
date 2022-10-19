@@ -129,10 +129,10 @@ main {
 
 	.slab {
 		margin: 2pt;
-		padding: 3pt;
+		padding: 5pt;
 	}
 
-	.repo_card_inner{
+	.repo_card_inner {
 		border-left: none
 	}
 
@@ -152,7 +152,7 @@ main {
 
 	.repo_small_thumbnail em {
 		margin-bottom: 5pt;
-	}	
+	}
 }
 
 @media only screen and (max-width: 600px) {
@@ -208,4 +208,13 @@ main {
 
 .hov:hover {
 	transform: scale(1.1);
+}
+
+#portal_slab {
+	flex-direction: row;
+}
+
+#portal, #portal_slab a {
+	height: 100px;
+	width: 100px
 }
