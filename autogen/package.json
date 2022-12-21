@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/dgudim/dgudim.github.io#readme",
   "dependencies": {
-    "puppeteer": "^19.4.0"
+    "puppeteer": "^19.4.1"
   },
   "type": "module",
   "devDependencies": {
