@@ -79,11 +79,10 @@ main {
 
 .repo_card_inner {
 	border-left: 2pt solid var(--accent-color);
-	padding: 3pt;
+	padding: 6pt;
 	width: 100%;
 	display: flex;
 	flex-direction: column;
-	padding: 6pt
 }
 
 .titleText {
@@ -167,22 +166,30 @@ main {
 	}
 }
 
-.repo_lang {
+.repo_stats .icon_container, .icon_container em {
 	display: flex;
+	align-items: center;
+	height: 18px;
 }
 
 .lang_icon {
-	width: 15px;
-	height: 15px;
-	margin: auto 0;
+	width: 18px;
+	height: 18px;
 	border-radius: 50%;
 	border: 1pt solid var(--lang-icon-border-color);
 }
 
+.icon_container em::before {
+	height: 18px;
+}
+
+.repo_org img {
+	display: flex;
+	height: 25px;
+}
+
 .stats_text {
-	margin: auto 0;
-	margin-left: 2pt;
-	line-height: 0;
+	margin-left: 3pt;
 }
 
 .center {
