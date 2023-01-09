@@ -1,9 +1,11 @@
 import puppeteer, { Browser, Page } from "puppeteer";
 import fs from "fs";
+import js_beautify from "js-beautify";
 
 let browser: Browser;
 let page: Page;
-const github_url = "https://github.com/dgudim?tab=repositories"
+const github_user_url = "https://github.com/dgudim"
+const github_user_repos_url = `${github_user_url}?tab=repositories`
 
 console.log("Starting puppeteer");
 browser = await puppeteer.launch({
@@ -13,34 +15,69 @@ browser = await puppeteer.launch({
 page = await browser.newPage();
 console.log("Puppeteer started");
 
-await page.goto(github_url);
+await page.goto(github_user_repos_url);
+console.log(`Loaded ${github_user_repos_url}`);
 
-console.log(`Loaded ${github_url}`);
+function fetchRepos(selector: string) {
+    return page.evaluate((selector) => {
 
-const repos = await page.evaluate(() => {
+        function normalize(text: string | null | undefined): string {
+            return text?.replaceAll("\n", "").trim() || "";
+        }
 
-    function normalize(text: string | null | undefined): string {
-        return text?.replaceAll("\n", "").trim() || "";
-    }
+        return Array.from(document.querySelectorAll(selector))
+            .map(elem => {
+                const username_and_repo = elem.querySelector('[itemprop="name codeRepository"]')?.getAttribute("href");
+                const name = username_and_repo?.split("/").pop();
+                return {
+                    url: `https://github.com${username_and_repo}`,
+                    username_and_repo: username_and_repo,
+                    name: name,
+                    description: normalize(elem.querySelector('[itemprop="description"]')?.textContent),
+                    lang: normalize(elem.querySelector('[itemprop="programmingLanguage"]')?.textContent),
+                    lang_color: elem.querySelector(".repo-language-color")?.getAttribute("style")?.replace("background-color: ", ""),
+                    stars: normalize(elem.querySelector(".octicon-star")?.parentElement?.textContent) || "0",
+                    forks: normalize(elem.querySelector(".octicon-repo-forked")?.parentElement?.textContent) || "0",
+                    org_name: "",
+                    org_icon: ""
+                }
+            });
+    }, selector);
+}
 
-    return Array.from(document.querySelectorAll("#user-repositories-list li.col-12"))
+let repos = await fetchRepos("#user-repositories-list li.col-12");
+
+console.log(`Got user repo list (${repos.length}), fetching orgs`);
+
+await page.goto(github_user_url);
+console.log(`Loaded ${github_user_url}`);
+
+const orgs = await page.evaluate(() => {
+
+    return Array.from(document.querySelectorAll('[itemprop="follows"]'))
         .map(elem => {
-            const username_and_repo = elem.querySelector('[itemprop="name codeRepository"]')?.getAttribute("href");
-            const name = username_and_repo?.split("/").pop();
+            const orgName = elem.getAttribute("href");
+            const icon_img = elem.querySelector("img");
             return {
-                url: `https://github.com${username_and_repo}`,
-                username_and_repo: username_and_repo,
-                name: name,
-                description: normalize(elem.querySelector('[itemprop="description"]')?.textContent),
-                lang: normalize(elem.querySelector('[itemprop="programmingLanguage"]')?.textContent),
-                lang_color: elem.querySelector(".repo-language-color")?.getAttribute("style")?.replace("background-color: ", ""),
-                stars: normalize(elem.querySelector(".octicon-star")?.parentElement?.textContent) || "0",
-                forks: normalize(elem.querySelector(".octicon-repo-forked")?.parentElement?.textContent) || "0"
+                repos_url: `https://github.com/orgs${orgName}/repositories`,
+                icon: icon_img?.src,
+                name: icon_img?.alt
             }
         });
 });
 
-console.log(`Got repo list (${repos.length}), fetching readme files`);
+console.log(`Fetched ${orgs.length} orgs: `);
+for (let org of orgs) {
+    console.log(`Fetching ${org.name}`);
+    await page.goto(org.repos_url);
+    const org_repos = await fetchRepos(".org-repos.repo-list .Box-row");
+    console.log(`Fetched ${org_repos.length} repos from ${org.name}`);
+    for (let org_repo of org_repos) {
+        org_repo.org_name = org.name || "";
+        org_repo.org_icon = org.icon || "";
+    }
+    repos = repos.concat(org_repos);
+}
 
 type RepoData = {
     url: string,
@@ -53,13 +90,15 @@ type RepoData = {
     full_name: string,
     html_id: string,
     icon: string | undefined,
-    thumbnail: string
+    thumbnail: string,
+    org_name: string | undefined,
+    org_icon: string | undefined
 }
 
 const repos_full = (await Promise.allSettled(repos.map(repo => {
     return new Promise(async (resolve, reject) => {
         const page = await browser.newPage();
-        await page.goto(repo.url);
+        await page.goto(repo.url, { timeout: 0 });
         console.log(`Loaded ${repo.url}`);
         const repo_full = await page.evaluate((repo) => {
             const project_name = document.querySelector("#user-content-title")?.textContent?.trim() || repo.name;
@@ -75,7 +114,9 @@ const repos_full = (await Promise.allSettled(repos.map(repo => {
                 full_name: full_name,
                 html_id: full_name.toLowerCase().replaceAll(" ", "_"),
                 icon: document.querySelector("#user-content-icon")?.getAttribute("src"),
-                thumbnail: document.querySelector("#user-content-thumb")?.getAttribute("src")
+                thumbnail: document.querySelector("#user-content-thumb")?.getAttribute("src"),
+                org_name: repo.org_name.length == 0 ? undefined : repo.org_name,
+                org_icon: repo.org_icon.length == 0 ? undefined : repo.org_icon
             } as RepoData;
         }, repo);
         await page.close();
@@ -88,6 +129,7 @@ const repos_full = (await Promise.allSettled(repos.map(repo => {
     });
 }))).filter(repo => repo.status == "fulfilled").map(repo => (repo as PromiseFulfilledResult<RepoData>).value);
 
+
 console.log(`Final repo list (${repos_full.length}), constructing page`);
 
 for (const repo of repos_full) {
@@ -95,7 +137,7 @@ for (const repo of repos_full) {
 }
 
 let htmlPage =
-`<!DOCTYPE html>
+    `<!DOCTYPE html>
 <html lang="en">
 
 	<head>
@@ -120,7 +162,7 @@ let htmlPage =
 					<span class="xlargeText center">KLOUD's projects</span>
 				</div>
 				<div class="slab">
-					<a href="https://github.com/dgudim/" target="_blank">
+					<a href="${github_user_url}" target="_blank">
 						<img src="https://avatars.githubusercontent.com/u/34401005?v=4" class="avatar hov" alt="avatar">
 					</a>
 				</div>
@@ -144,19 +186,25 @@ for (const repo_data of repos_full) {
                                     <span class="descriptionText" id="${repo_data.html_id}_description">${repo_data.description}</span>
                                 </div>
                                 <div class="repo_stats">
-                                    <div class="repo_lang">
+                                    <div class="icon_container repo_lang">
                                         <div class="lang_icon" style="background: ${repo_data.lang_color};"></div>
                                         <span class="stats_text">${repo_data.lang}</span>
                                     </div>
-                                    <div class="repo_stars">
+                                    <div class="icon_container repo_stars">
                                         <em class="fa-regular fa-star"></em>
                                         <span class="stats_text" id="${repo_data.html_id}_stars">${repo_data.stars}</span>
                                     </div>
-                                    <div class="repo_forks">
+                                    <div class="icon_container repo_forks">
                                         <em class="fa-solid fa-code-fork"></em>
                                         <span class="stats_text" id="${repo_data.html_id}_forks">${repo_data.forks}</span>
-                                    </div>
-                                </div>
+                                    </div>`
+    if (repo_data.org_icon) {
+        htmlPage += `               <div class="icon_container repo_org">
+                                        <img src="${repo_data.org_icon}" alt="org_icon">
+                                        <span class="stats_text">${repo_data.org_name}</span>
+                                    </div>`
+    }
+    htmlPage += `               </div>
                             </div>
                         </div>
 
@@ -186,11 +234,11 @@ htmlPage += `
 
 const file = "../index.html";
 
-if(fs.existsSync(file)) {
+if (fs.existsSync(file)) {
     fs.unlinkSync(file);
 }
 
-fs.writeFileSync(file, htmlPage);
+fs.writeFileSync(file, js_beautify.html(htmlPage, { indent_size: 4 }));
 
 console.log("DONE");
 process.exit(0);
