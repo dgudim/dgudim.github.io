@@ -12,16 +12,24 @@ mkdir(rendered);
 print(root);
 
 env = Environment(loader=FileSystemLoader(root))
+base = 'parts/base.html.j2'
 
 files = pathlib.Path(root);
 
 for [dirpath, dirnames, filenames] in os.walk(root):
+    
+    base_tamplate = env.get_template(base);
+    
     for item in filenames:
         fullitem = os.path.join(dirpath, item);
     
         if os.path.isfile(fullitem) and item.endswith('.j2'):
             print(f"Rendering {item}");
             with open(os.path.join(rendered, item).replace('.j2', ''), "w") as fh:
-                env.get_template(item).stream().dump(fh);
+                template = env.get_template(item);
+                ctx = template.new_context();
+                content = env.concat(template.root_render_func(ctx));
+                title = ctx.vars.get('title', None);
+                base_tamplate.stream(content = content, title = title).dump(fh);
     break; # Only parse top level
   

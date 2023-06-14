@@ -1,65 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
+{% set title = "Kloud's website" %}
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="styles/styles.css">
-        <script type="text/javascript" src="scripts/menu.js"></script>
-        <title>Kloud's website</title>
-    </head>
+<img src="assets/avatar.webp" alt="avatar" class="avatar center">
 
-    <body>
+<div class="terminal-content">
+    <code class="terminal-content-command">[kloud@sky]$ cat /etc/motd <span class="blink">█</span></code>
+    <h1 id="hi-there">Hello there!<a href="#hi-there" class="hanchor" arialabel="Anchor">⌗</a></h1>
+    <p>
+        <b>I am Kloud, welcome to my corner of the web.</b>
+        <br>I am interested in <a href="#">hardware</a>, <a href="#">software</a> (specifically FOSS)
+        and all in between.
+        <br>I have lots of free time, most of the time I'm writing random projects.
+        <br>Feel free to reach out to me at my handles, you can find them at the contact section of the
+        website,
+        although I might not respond right away.
+    </p>
+</div>
 
-        <div class="container center headings-one-size">
-            {% include 'parts/head.html.j2' %}
+<article class="post on-list line">
+    <h1 class="post-title" id="about-website">
+        <a href="#about-website">About this website<a href="#about-website" class="hanchor" arialabel="Anchor">⌗</a></a>
+    </h1>
 
-            <div class="content">
-                <img src="assets/avatar.webp" alt="avatar" class="avatar center">
+    <div class="post-content">
 
-                <div class="terminal-content">
-                    <code class="terminal-content-command">[kloud@sky]$ cat /etc/motd <span class="blink">█</span></code>
-                    <h1 id="hi-there">Hello there!<a href="#hi-there" class="hanchor" arialabel="Anchor">⌗</a></h1>
-                    <p>
-                        <b>I am Kloud, welcome to my corner of the web.</b>
-                        <br>I am interested in <a href="#">hardware</a>, <a href="#">software</a> (specifically FOSS)
-                        and all in between.
-                        <br>I have lots of free time, most of the time I'm writing random projects.
-                        <br>Feel free to reach out to me at my handles, you can find them at the contact section of the
-                        website,
-                        although I might not respond right away.
-                    </p>
-                </div>
+        <h2>Theme</h2>
+        <p>This website is made using a modified
+            <a href="https://github.com/panr/hugo-theme-terminal" target="_blank">Hugo theme</a>,
+            although,
+            I am not using hugo to generate the website and use the theme just for styling.
+        </p>
 
-                <article class="post on-list line">
-                    <h1 class="post-title" id="about-website">
-                        <a href="#about-website">About this website<a href="#about-website" class="hanchor"
-                                arialabel="Anchor">⌗</a></a>
-                    </h1>
+        <h2>Why</h2>
+        <p>
+            It was created purely for entertainment purposes, expect some random stuff that comes to my
+            mind.
+        </p>
 
-                    <div class="post-content">
-
-                        <h2>Theme</h2>
-                        <p>This website is made using a modified
-                            <a href="https://github.com/panr/hugo-theme-terminal" target="_blank">Hugo theme</a>,
-                            although,
-                            I am not using hugo to generate the website and use the theme just for styling.
-                        </p>
-
-                        <h2>Why</h2>
-                        <p>
-                            It was created purely for entertainment purposes, expect some random stuff that comes to my
-                            mind.
-                        </p>
-
-                    </div>
-                </article>
-
-            </div>
-
-            {% include 'parts/foot.html.j2' %}
-        </div>
-
-    </body>
-
-</html>
+    </div>
+</article>
