@@ -410,6 +410,10 @@ a {
 a:has(code) {
   text-decoration-color: #8ec07c;
 }
+a.social {
+  color: #fabd2f;
+  text-decoration: none;
+}
 
 img {
   display: block;

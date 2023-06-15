@@ -63,6 +63,11 @@ a {
   &:has(code) {
     text-decoration-color: $accent;
   }
+
+  &.social {
+    color: $accent2;
+    text-decoration: none;
+  }
 }
 
 img {
