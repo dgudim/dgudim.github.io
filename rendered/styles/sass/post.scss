@@ -76,20 +76,15 @@ blockquote {
   }
 }
 
-.posts {
-  width: 100%;
-}
-
 .post {
   width: 100%;
   text-align: left;
   margin: 20px auto;
   padding: 20px 0;
 
-  border-bottom: 1px solid $border-color;
-
-  // &:not(:last-of-type) {
-  // }
+  &:not(:last-of-type), &.bottom-line {
+    border-bottom: 1px solid $border-color;
+  }
 
   &-meta {
     font-size: 1rem;
