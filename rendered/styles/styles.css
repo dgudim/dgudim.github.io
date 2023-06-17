@@ -667,7 +667,7 @@ h1:hover a, h2:hover a, h3:hover a, h4:hover a {
 }
 
 .footer {
-  padding: 40px 0;
+  padding: 30px 0;
   flex-grow: 0;
   opacity: 0.5;
 }
@@ -675,14 +675,9 @@ h1:hover a, h2:hover a, h3:hover a, h4:hover a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 0;
-  width: 760px;
-  max-width: 100%;
-}
-@media (max-width: 900px) {
-  .footer_inner {
-    flex-direction: column;
-  }
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
 }
 .footer a {
   color: inherit;
@@ -692,12 +687,8 @@ h1:hover a, h2:hover a, h3:hover a, h4:hover a {
   flex-flow: row wrap;
   flex: 1;
   align-items: center;
-  font-size: 1rem;
   justify-content: center;
-}
-.footer .copyright-user {
-  margin: auto;
-  text-align: center;
+  font-size: 1rem;
 }
 .footer .copyright > *:first-child:not(:only-child) {
   margin-right: 10px;
