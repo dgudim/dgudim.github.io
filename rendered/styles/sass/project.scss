@@ -1,0 +1,161 @@
+.project-card {
+    @extend .framed;
+    padding: 0px;
+    margin-top: 10px;
+
+    text-decoration: none;
+    display: block;
+
+    @media ($phone) {
+        margin-top: 30px;
+    }
+}
+
+.repo_card {
+    border: 2pt solid var(--accent-color);
+    border-radius: 5pt;
+    width: 100%;
+    box-shadow: 0 3pt 1pt var(--box-shadow-color), 2pt 2pt 1pt var(--box-shadow-color);
+    background: var(--repo-card-bg-color);
+    display: flex;
+    flex-wrap: nowrap;
+
+    &_adaptive {
+        display: flex;
+        width: 100%;
+
+        &_thumbnail {
+            min-height: 150px;
+            min-width: 250px;
+            border-radius: 3pt 0 0 3pt;
+            display: block;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+
+        &_inner {
+            border-left: 1px solid $accent2;
+            padding: 6pt;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+    &_small_thumbnail {
+        display: flex;
+        flex-direction: column;
+
+        img {
+            height: 90px;
+            width: 90px;
+            display: block;
+            background: black;
+            border-radius: 5pt 0 5pt 40%;
+            border-bottom: 2pt solid var(--accent-color);
+            border-left: 2pt solid var(--accent-color);
+        }
+
+        em {
+            margin: auto;
+        }
+    }
+}
+
+.titleText {
+    margin-top: 2pt
+}
+
+.repo_text_container {
+    padding-bottom: 10pt;
+}
+
+.repo_stats {
+    margin-top: auto;
+    display: flex;
+}
+
+.repo_stats>div {
+    margin-right: 20pt;
+}
+
+@media only screen and (max-width: 800px) {
+    .xlargeText {
+        font-size: x-large;
+    }
+
+    .slab {
+        margin: 2pt;
+        padding: 5pt;
+    }
+
+    .repo_card_inner {
+        border-left: none
+    }
+
+    .repo_card_adaptive {
+        flex-direction: column;
+    }
+
+    .repo_thumbnail {
+        border-radius: 3pt 0 7pt 3pt;
+        margin-right: 5pt;
+    }
+
+    .repo_small_thumbnail img {
+        height: 70px;
+        width: 70px;
+    }
+
+    .repo_small_thumbnail em {
+        margin-bottom: 5pt;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .repo_small_thumbnail {
+        display: none
+    }
+
+    .repo_thumbnail {
+        border-radius: 0;
+        margin: 0;
+        min-width: 25px;
+    }
+}
+
+.repo_stats .icon_container,
+.icon_container em {
+    display: flex;
+    align-items: center;
+    height: 18px;
+}
+
+.lang_icon {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1pt solid var(--lang-icon-border-color);
+}
+
+.icon_container em::before {
+    height: 18px;
+}
+
+.repo_org img {
+    display: flex;
+    height: 25px;
+}
+
+.stats_text {
+    margin-left: 3pt;
+}
+
+.hov {
+    transition: transform .2s;
+}
+
+.hov:hover {
+    transform: scale(1.1);
+}

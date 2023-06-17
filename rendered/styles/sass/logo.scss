@@ -1,0 +1,19 @@
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  background: $accent;
+  color: black;
+  padding: 5px 10px;
+}
+
+.blink {
+  animation: blinker 1s infinite;
+  padding-right: 0.5em;
+}
+
+@keyframes blinker {
+  from { opacity: 1.0; }
+  50% { opacity: 0; }
+  to { opacity: 1.0; }
+}

@@ -1,0 +1,45 @@
+{% set desc = "Kloud's website. A place for my random stuff" %}
+{% set title = title if title else "Kloud's website" %}
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
+        <meta property="og:image" content="assets/favicon.ico">
+
+        <link rel="stylesheet" href="styles/styles.css">
+        <script type="text/javascript" src="scripts/menu.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css"
+            integrity="sha256-XoaMnoYC5TH6/+ihMEnospgm0J1PM/nioxbOUdnM8HY=" crossorigin="anonymous">
+
+        <meta name="author" content="kloud">
+
+        <meta name="description" content="{{ desc }}">
+        <meta property="og:description" content="{{ desc }}">
+
+        <meta property="og:type" content="website">
+        <meta property="og:locale" content="en">
+        <meta property="og:url" content="/">
+        <link rel="canonical" href="/">
+
+        <meta property="og:site_name" content="{{ title }}">
+        <meta property="og:title" content="{{ title }}">
+        <title>{{title}}</title>
+    </head>
+
+    <body>
+
+        <div class="container center headings-one-size">
+            {% include 'parts/head.html.j2' %}
+            <div class="content">
+                {{ content }}
+            </div>
+            {% include 'parts/foot.html.j2' %}
+        </div>
+
+    </body>
+
+</html>
