@@ -136,39 +136,7 @@ for (const repo of repos_full) {
     console.log(repo);
 }
 
-let htmlPage =
-    `<!DOCTYPE html>
-<html lang="en">
-
-	<head>
-		<title>KLOUD'S github projects</title>
-
-        <script defer src="./fetch.js"></script>
-
-		<link rel="stylesheet" type="text/css" href="style.css">
-		<link rel="stylesheet" type="text/css"
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta charset="utf-8">
-
-		<link rel="shortcut icon" href="https://avatars.githubusercontent.com/u/34401005?v=4" type="image/png" radius>
-	</head>
-
-	<body>
-		<main>
-			<div class="flex">
-				<div class="slab big">
-					<span class="xlargeText center">KLOUD's projects</span>
-				</div>
-				<div class="slab">
-					<a href="${github_user_url}" target="_blank">
-						<img src="https://avatars.githubusercontent.com/u/34401005?v=4" class="avatar hov" alt="avatar">
-					</a>
-				</div>
-			</div>
-			<div class="slab big">`;
-
+let htmlPage = "";
 for (const repo_data of repos_full) {
     htmlPage += `
                 <a href="${repo_data.url}">
@@ -218,21 +186,7 @@ for (const repo_data of repos_full) {
                 </a>`;
 }
 
-htmlPage += `
-            </div>
-
-            <div class="slab big" id="portal_slab">
-                <span class="xlargeText center">Click the portal to go back</span>
-                <a href="https://github.com/dgudim#user-content-portal">
-                    <img id="portal" src="https://media.tenor.com/fWA2N8CPWEkAAAAi/sonic-mania.gif" alt="portal">
-                </a>
-            </div>
-
-        </main>
-    </body>
-</html>`
-
-const file = "../index.html";
+const file = "templates/projects.html.j2";
 
 if (fs.existsSync(file)) {
     fs.unlinkSync(file);
