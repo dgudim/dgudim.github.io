@@ -71,25 +71,3 @@ a.read-more:active {
   margin: 20px 0;
   max-width: 100%;
 }
-
-.code-toolbar {
-  margin-bottom: 20px;
-
-  .toolbar-item a {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 3px 8px;
-    margin-bottom: 5px;
-    text-decoration: none;
-    text-align: center;
-    font-size: 13px;
-    font-weight: 500;
-    border-radius: 8px;
-    border: 1px solid transparent;
-    appearance: none;
-    cursor: pointer;
-    outline: none;
-  }
-}
