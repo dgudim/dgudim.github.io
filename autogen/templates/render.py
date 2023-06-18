@@ -5,11 +5,11 @@ def mkdir(path):
     if not os.path.exists(path):
         os.mkdir(path);
 
-root = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), ".."));
+root = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), "."));
 
-rendered = os.path.join(root, 'rendered');
+rendered = os.path.join(root, '../..');
 mkdir(rendered);
-print(root);
+print(f"Template root: {root}");
 
 env = Environment(loader=FileSystemLoader(root))
 base = 'parts/base.html.j2'
@@ -32,4 +32,5 @@ for [dirpath, dirnames, filenames] in os.walk(root):
                 title = ctx.vars.get('title', None);
                 base_tamplate.stream(content = content, title = title).dump(fh);
     break; # Only parse top level
-  
+
+print("Template rendering DONE ✅");

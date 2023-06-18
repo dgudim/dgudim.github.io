@@ -1,5 +1,11 @@
 import puppeteer, { Browser, Page } from "puppeteer";
 import fs from "fs";
+
+import path from "path";
+import { fileURLToPath } from 'url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+import * as cproc from "child_process";
 import js_beautify from "js-beautify";
 
 let browser: Browser;
@@ -22,7 +28,7 @@ function fetchRepos(selector: string) {
     return page.evaluate((selector) => {
 
         function normalize(text: string | null | undefined): string {
-            return text?.replaceAll("\n", "").trim() || "";
+            return text?.replaceAll("\n", "").trim() ?? "";
         }
 
         return Array.from(document.querySelectorAll(selector))
@@ -73,8 +79,8 @@ for (let org of orgs) {
     const org_repos = await fetchRepos(".org-repos.repo-list .Box-row");
     console.log(`Fetched ${org_repos.length} repos from ${org.name}`);
     for (let org_repo of org_repos) {
-        org_repo.org_name = org.name || "";
-        org_repo.org_icon = org.icon || "";
+        org_repo.org_name = org.name ?? "";
+        org_repo.org_icon = org.icon ?? "";
     }
     repos = repos.concat(org_repos);
 }
@@ -139,31 +145,31 @@ for (const repo of repos_full) {
 let htmlPage = "";
 for (const repo_data of repos_full) {
     htmlPage += `
-                <a href="${repo_data.url}">
-                    <div data-repo="${repo_data.username_and_repo}" class="repo_card" style="background: linear-gradient(25deg, rgb(170, 170, 170) 52%, ${repo_data.lang_color} 100%);">
+                <a class="project-card" href="${repo_data.url}">
+                    <div data-repo="${repo_data.username_and_repo}" class="repo_card" style="background: linear-gradient(25deg, transparent 52%, ${repo_data.lang_color} 100%);">
 
                         <div class="repo_card_adaptive">
 
-                            <div class="repo_thumbnail"
+                            <div class="repo_card_adaptive_thumbnail"
                                 style="background-image: url('${repo_data.thumbnail}')">
                             </div>
 
-                            <div class="repo_card_inner">
+                            <div class="repo_card_adaptive_inner">
                                 <div class="repo_text_container">
                                     <h2 class="titleText">${repo_data.full_name}</h2>
                                     <span class="descriptionText" id="${repo_data.html_id}_description">${repo_data.description}</span>
                                 </div>
                                 <div class="repo_stats">
                                     <div class="icon_container repo_lang">
-                                        <div class="lang_icon" style="background: ${repo_data.lang_color};"></div>
+                                        <em style="color: ${repo_data.lang_color};" class="fa fa-circle"></em>
                                         <span class="stats_text">${repo_data.lang}</span>
                                     </div>
                                     <div class="icon_container repo_stars">
-                                        <em class="fa-regular fa-star"></em>
+                                        <em class="fa fa-star-o"></em>
                                         <span class="stats_text" id="${repo_data.html_id}_stars">${repo_data.stars}</span>
                                     </div>
                                     <div class="icon_container repo_forks">
-                                        <em class="fa-solid fa-code-fork"></em>
+                                        <em class="fa fa-code-fork"></em>
                                         <span class="stats_text" id="${repo_data.html_id}_forks">${repo_data.forks}</span>
                                     </div>`
     if (repo_data.org_icon) {
@@ -176,23 +182,33 @@ for (const repo_data of repos_full) {
                             </div>
                         </div>
 
-                        <div class="repo_small_thumbnail">
+                        <div class="repo_card_small_thumbnail">
                             <img src="${repo_data.icon}"
-                                alt="repo_small_thumbnail">
-                            <em class="fa-brands fa-github fa-3x hov"></em>
+                                alt="repo_card_small_thumbnail">
                         </div>
 
                     </div>
                 </a>`;
 }
 
-const file = "templates/projects.html.j2";
+const outFile = path.join(__dirname, "templates/projects.html.j2");
+const genFile = path.join(__dirname, "templates/render.py");
 
-if (fs.existsSync(file)) {
-    fs.unlinkSync(file);
+if (fs.existsSync(outFile)) {
+    fs.unlinkSync(outFile);
 }
 
-fs.writeFileSync(file, js_beautify.html(htmlPage, { indent_size: 4 }));
+fs.writeFileSync(outFile, js_beautify.html(htmlPage, { indent_size: 4 }));
 
-console.log("DONE");
-process.exit(0);
+console.log("Template generation DONE ✅");
+const result = cproc.exec(`python ${genFile}`);
+result.stdout?.pipe(process.stdout);
+result.stderr?.pipe(process.stderr);
+
+result.on('exit', (code) => {
+    console.log("Finished");
+    process.exit(code ?? 0);
+});
+
+
+
