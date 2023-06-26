@@ -598,9 +598,6 @@ blockquote.filled a {
   width: 100%;
   border-bottom: 3px dotted #8ec07c;
 }
-.post-title.top {
-  margin-top: 0px;
-}
 .post-title a {
   text-decoration: none;
 }
