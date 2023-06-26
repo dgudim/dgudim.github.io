@@ -5,7 +5,9 @@ import path from "path";
 import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-import * as cproc from "child_process";
+import util from 'util';
+import { exec as ex } from "child_process";
+const exec = util.promisify(ex);
 import js_beautify from "js-beautify";
 
 let browser: Browser;
@@ -193,6 +195,7 @@ for (const repo_data of repos_full) {
 
 const outFile = path.join(__dirname, "templates/projects.html.j2");
 const genFile = path.join(__dirname, "templates/render.py");
+const scssFile = path.join(__dirname, "styles/render.sh");
 
 if (fs.existsSync(outFile)) {
     fs.unlinkSync(outFile);
@@ -201,14 +204,18 @@ if (fs.existsSync(outFile)) {
 fs.writeFileSync(outFile, js_beautify.html(htmlPage, { indent_size: 4 }));
 
 console.log("Template generation DONE ✅");
-const result = cproc.exec(`python ${genFile}`);
-result.stdout?.pipe(process.stdout);
-result.stderr?.pipe(process.stderr);
 
-result.on('exit', (code) => {
-    console.log("Finished");
-    process.exit(code ?? 0);
-});
+async function run(command: string) {
+    const { stdout, stderr } = await exec(command);
+    process.stdout.write(stdout);
+    process.stderr.write(stderr);
+}
+
+await run(`python ${genFile}`);
+await run(`bash ${scssFile}`);
+
+process.exit(0);
+
 
 
 
