@@ -670,6 +670,7 @@ h4:hover a {
   margin-top: 15px;
   text-decoration: none;
   display: block;
+  border: 1px solid #83a598;
 }
 .project-card:first-of-type {
   margin-top: 30px;
