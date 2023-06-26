@@ -16,11 +16,13 @@ window.addEventListener('DOMContentLoaded', async function () {
 
         const repo_data = await get(`https://api.github.com/repos${repo_card.getAttribute('data-repo')}`);
 
+        console.log(`Fetched ${repo_data.name}`)
+
         if (!repo_data.description) {
             continue;
         }
 
-        repo_card.querySelector(".descriptionText").textContent = repo_data.description;
+        repo_card.querySelector("p").textContent = repo_data.description;
         repo_card.querySelector(".repo_stars .stats_text").textContent = repo_data.stargazers_count || 0;
         repo_card.querySelector(".repo_forks .stats_text").textContent = repo_data.forks_count || 0;
     }

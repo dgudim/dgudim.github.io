@@ -39,6 +39,7 @@ $text_invert: $bg_h;
 $background: mix($accent, $bg, 0%);
 $color: $fg;
 $border-color: $bg2;
+$shadow-color: transparentize($accent, .9);
 
 /* MEDIA QUERIES */
 $phone: "max-width: 684px";
@@ -48,4 +49,5 @@ $tablet: "max-width: 900px";
 :root {
   --phoneWidth: (max-width: 684px);
   --tabletWidth: (max-width: 900px);
+  --bg-color: #{$background};
 }

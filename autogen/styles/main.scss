@@ -64,6 +64,10 @@ a {
     text-decoration-color: $accent;
   }
 
+  &.accent_link {
+    color: $accent3;
+  }
+
   &.social {
     color: $accent2;
     text-decoration: none;
@@ -79,13 +83,13 @@ img {
     width: 33%;
 
     margin-bottom: 30px;
+
     @media ($phone) {
       margin-bottom: 20px;
       margin-top: 20px;
     }
 
-    $shadow-color: transparentize($bg2, .2);
-    box-shadow: 0 0 50px $shadow-color
+    box-shadow: 0 0 50px transparentize($bg2, .2)
   }
 
   &.left {
@@ -287,12 +291,7 @@ mark {
 }
 
 .content {
-  display: flex;
-  flex-direction: column;
-
-  @media print {
-    display: initial;
-  }
+  display: block;
 }
 
 hr {

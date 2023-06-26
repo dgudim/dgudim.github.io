@@ -95,7 +95,7 @@ type RepoData = {
     lang_color: string,
     stars: string,
     forks: string,
-    full_name: string,
+    project_name: string,
     html_id: string,
     icon: string | undefined,
     thumbnail: string,
@@ -109,8 +109,7 @@ const repos_full = (await Promise.allSettled(repos.map(repo => {
         await page.goto(repo.url, { timeout: 0 });
         console.log(`Loaded ${repo.url}`);
         const repo_full = await page.evaluate((repo) => {
-            const project_name = document.querySelector("#user-content-title")?.textContent?.trim() || repo.name;
-            const full_name = (repo.name == project_name ? project_name : `${project_name} (${repo.name})`) || "";
+            const project_name = document.querySelector("#user-content-title")?.textContent?.trim() || repo.name || "";
             return {
                 url: repo.url,
                 username_and_repo: repo.username_and_repo,
@@ -119,8 +118,8 @@ const repos_full = (await Promise.allSettled(repos.map(repo => {
                 lang_color: repo.lang_color,
                 stars: repo.stars,
                 forks: repo.forks,
-                full_name: full_name,
-                html_id: full_name.toLowerCase().replaceAll(" ", "_"),
+                project_name: project_name,
+                html_id: project_name.toLowerCase().replaceAll(" ", "_"),
                 icon: document.querySelector("#user-content-icon")?.getAttribute("src"),
                 thumbnail: document.querySelector("#user-content-thumb")?.getAttribute("src"),
                 org_name: repo.org_name.length == 0 ? undefined : repo.org_name,
@@ -148,18 +147,23 @@ let htmlPage = "";
 for (const repo_data of repos_full) {
     htmlPage += `
                 <a class="project-card" href="${repo_data.url}">
-                    <div data-repo="${repo_data.username_and_repo}" class="repo_card" style="background: linear-gradient(25deg, transparent 52%, ${repo_data.lang_color} 100%);">
+                    <div data-repo="${repo_data.username_and_repo}" class="repo_card" 
+                    style="
+                    background: 
+                    linear-gradient(-90deg, transparent 0%, var(--bg-color) 20%), 
+                    repeating-linear-gradient(90deg, ${repo_data.lang_color}, ${repo_data.lang_color} 2px, transparent 0, transparent 15px);
+                    background-position: 5px 0;">
 
                         <div class="repo_card_adaptive">
 
                             <div class="repo_card_adaptive_thumbnail"
-                                style="background-image: url('${repo_data.thumbnail}')">
+                                style="background-image: linear-gradient(90deg, transparent 75%, var(--bg-color) 100%), url('${repo_data.thumbnail}')">
                             </div>
 
                             <div class="repo_card_adaptive_inner">
                                 <div class="repo_text_container">
-                                    <h2 class="titleText">${repo_data.full_name}</h2>
-                                    <span class="descriptionText" id="${repo_data.html_id}_description">${repo_data.description}</span>
+                                    <h2>${repo_data.project_name}</h2>
+                                    <p id="${repo_data.html_id}_description">${repo_data.description}</p>
                                 </div>
                                 <div class="repo_stats">
                                     <div class="icon_container repo_lang">
@@ -193,7 +197,7 @@ for (const repo_data of repos_full) {
                 </a>`;
 }
 
-const outFile = path.join(__dirname, "templates/projects.html.j2");
+const outFile = path.join(__dirname, "templates/parts/projects_content.html.j2");
 const genFile = path.join(__dirname, "templates/render.py");
 const scssFile = path.join(__dirname, "styles/render.sh");
 

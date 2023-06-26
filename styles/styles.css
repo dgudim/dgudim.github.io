@@ -4,6 +4,7 @@
 :root {
   --phoneWidth: (max-width: 684px);
   --tabletWidth: (max-width: 900px);
+  --bg-color: #282828;
 }
 
 @font-face {
@@ -118,7 +119,7 @@
   flex-direction: column;
   position: absolute;
   background: #282828;
-  box-shadow: 0 10px rgba(40, 40, 40, 0.8), -10px 10px rgba(40, 40, 40, 0.8), 10px 10px rgba(40, 40, 40, 0.8);
+  box-shadow: -10px 10px rgba(142, 192, 124, 0.1);
   border: 2px solid;
   margin: 0;
   padding: 10px;
@@ -282,6 +283,9 @@ a {
 }
 a:has(code) {
   text-decoration-color: #8ec07c;
+}
+a.accent_link {
+  color: #d3869b;
 }
 a.social {
   color: #fabd2f;
@@ -489,13 +493,7 @@ mark {
 }
 
 .content {
-  display: flex;
-  flex-direction: column;
-}
-@media print {
-  .content {
-    display: initial;
-  }
+  display: block;
 }
 
 hr {
@@ -600,6 +598,9 @@ blockquote.filled a {
   width: 100%;
   border-bottom: 3px dotted #8ec07c;
 }
+.post-title.top {
+  margin-top: 0px;
+}
 .post-title a {
   text-decoration: none;
 }
@@ -656,7 +657,10 @@ blockquote.filled a {
   visibility: hidden;
 }
 
-h1:hover a, h2:hover a, h3:hover a, h4:hover a {
+h1:hover a,
+h2:hover a,
+h3:hover a,
+h4:hover a {
   visibility: visible;
 }
 
@@ -666,22 +670,22 @@ h1:hover a, h2:hover a, h3:hover a, h4:hover a {
 
 .project-card {
   padding: 0px;
-  margin-top: 10px;
+  margin-top: 15px;
   text-decoration: none;
   display: block;
 }
-@media (max-width: 684px) {
-  .project-card {
-    margin-top: 30px;
-  }
+.project-card:first-of-type {
+  margin-top: 30px;
+}
+.project-card h2 {
+  margin: 0px;
+}
+.project-card p {
+  margin: 10pt 0 !important;
 }
 
 .repo_card {
-  border: 2pt solid var(--accent-color);
-  border-radius: 5pt;
   width: 100%;
-  box-shadow: 0 3pt 1pt var(--box-shadow-color), 2pt 2pt 1pt var(--box-shadow-color);
-  background: var(--repo-card-bg-color);
   display: flex;
   flex-wrap: nowrap;
 }
@@ -689,92 +693,51 @@ h1:hover a, h2:hover a, h3:hover a, h4:hover a {
   display: flex;
   width: 100%;
 }
+@media (max-width: 684px) {
+  .repo_card_adaptive {
+    flex-direction: column;
+  }
+}
 .repo_card_adaptive_thumbnail {
   min-height: 150px;
   min-width: 250px;
-  border-radius: 3pt 0 0 3pt;
   display: block;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
 }
 .repo_card_adaptive_inner {
-  border-left: 1px solid #fabd2f;
   padding: 6pt;
   width: 100%;
   display: flex;
   flex-direction: column;
 }
 .repo_card_small_thumbnail {
-  display: flex;
-  flex-direction: column;
+  margin-right: 5px;
+  margin-top: 5px;
+}
+@media (max-width: 684px) {
+  .repo_card_small_thumbnail {
+    display: none;
+  }
 }
 .repo_card_small_thumbnail img {
-  height: 90px;
   width: 90px;
-  display: block;
-  background: black;
-  border-radius: 5pt 0 5pt 40%;
-  border-bottom: 2pt solid var(--accent-color);
-  border-left: 2pt solid var(--accent-color);
-}
-.repo_card_small_thumbnail em {
-  margin: auto;
-}
-
-.titleText {
-  margin-top: 2pt;
-}
-
-.repo_text_container {
-  padding-bottom: 10pt;
+  border-radius: 10px;
+  background: radial-gradient(closest-side, var(--bg-color) 20%, transparent);
 }
 
 .repo_stats {
   margin-top: auto;
   display: flex;
+  flex-wrap: wrap;
+  gap: 10pt;
 }
 
 .repo_stats > div {
-  margin-right: 20pt;
+  margin-right: 10pt;
 }
 
-@media only screen and (max-width: 800px) {
-  .xlargeText {
-    font-size: x-large;
-  }
-  .slab {
-    margin: 2pt;
-    padding: 5pt;
-  }
-  .repo_card_inner {
-    border-left: none;
-  }
-  .repo_card_adaptive {
-    flex-direction: column;
-  }
-  .repo_thumbnail {
-    border-radius: 3pt 0 7pt 3pt;
-    margin-right: 5pt;
-  }
-  .repo_small_thumbnail img {
-    height: 70px;
-    width: 70px;
-  }
-  .repo_small_thumbnail em {
-    margin-bottom: 5pt;
-  }
-}
-@media only screen and (max-width: 600px) {
-  .repo_small_thumbnail {
-    display: none;
-  }
-  .repo_thumbnail {
-    border-radius: 0;
-    margin: 0;
-    min-width: 25px;
-  }
-}
 .repo_stats .icon_container,
 .icon_container em {
   display: flex;
@@ -793,14 +756,6 @@ h1:hover a, h2:hover a, h3:hover a, h4:hover a {
 
 .stats_text {
   margin-left: 3pt;
-}
-
-.hov {
-  transition: transform 0.2s;
-}
-
-.hov:hover {
-  transform: scale(1.1);
 }
 
 .footer {

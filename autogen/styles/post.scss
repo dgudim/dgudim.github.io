@@ -82,7 +82,8 @@ blockquote {
   margin: 20px auto;
   padding: 20px 0;
 
-  &:not(:last-of-type), &.bottom-line {
+  &:not(:last-of-type),
+  &.bottom-line {
     border-bottom: 1px solid $border-color;
   }
 
@@ -107,6 +108,10 @@ blockquote {
       display: block;
       width: 100%;
       border-bottom: $border;
+    }
+
+    &.top {
+      margin-top: 0px;
     }
 
     a {
@@ -162,7 +167,7 @@ blockquote {
     justify-content: center;
     margin-bottom: 10px;
 
-    & + h2 {
+    &+h2 {
       margin-top: -10px;
       margin-bottom: 20px;
     }
@@ -176,7 +181,10 @@ blockquote {
   visibility: hidden;
 }
 
-h1:hover a, h2:hover a, h3:hover a, h4:hover a {
+h1:hover a,
+h2:hover a,
+h3:hover a,
+h4:hover a {
   visibility: visible;
 }
 
