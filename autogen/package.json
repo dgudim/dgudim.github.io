@@ -19,7 +19,7 @@
   "homepage": "https://github.com/dgudim/dgudim.github.io#readme",
   "dependencies": {
     "js-beautify": "^1.14.9",
-    "puppeteer": "^21.0.1"
+    "puppeteer": "^21.1.1"
   },
   "type": "module",
   "devDependencies": {
