@@ -18,12 +18,12 @@
   },
   "homepage": "https://github.com/dgudim/dgudim.github.io#readme",
   "dependencies": {
-    "js-beautify": "^1.14.9",
-    "puppeteer": "^21.1.1"
+    "js-beautify": "^1.14.11",
+    "puppeteer": "^21.7.0"
   },
   "type": "module",
   "devDependencies": {
-    "@types/js-beautify": "^1.14.0",
-    "ts-node": "^10.9.1"
+    "@types/js-beautify": "^1.14.3",
+    "ts-node": "^10.9.2"
   }
 }
