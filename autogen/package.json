@@ -5,7 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node index.ts"
+    "start": "bun index.ts"
   },
   "repository": {
     "type": "git",
@@ -23,7 +23,6 @@
   },
   "type": "module",
   "devDependencies": {
-    "@types/js-beautify": "^1.14.3",
-    "ts-node": "^10.9.2"
+    "@types/js-beautify": "^1.14.3"
   }
 }

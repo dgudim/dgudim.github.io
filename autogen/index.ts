@@ -1,41 +1,38 @@
-import puppeteer, { Browser, Page } from "puppeteer";
+import puppeteer from "puppeteer";
 import fs from "fs";
 
 import path from "path";
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-import util from 'util';
+import util from "util";
 import { exec as ex } from "child_process";
 const exec = util.promisify(ex);
 import js_beautify from "js-beautify";
 
-let browser: Browser;
-let page: Page;
-const github_user_url = "https://github.com/dgudim"
-const github_user_repos_url = `${github_user_url}?tab=repositories`
+const github_user_url = "https://github.com/dgudim";
+const github_user_repos_url = `${github_user_url}?tab=repositories`;
 
 console.log("Starting puppeteer");
-browser = await puppeteer.launch({
+const browser = await puppeteer.launch({
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
 });
 
-page = await browser.newPage();
+const page = await browser.newPage();
 console.log("Puppeteer started");
 
 await page.goto(github_user_repos_url);
 console.log(`Loaded ${github_user_repos_url}`);
 
-function fetchRepos(selector: string) {
-    return page.evaluate((selector) => {
+function fetchRepos(selector: string, title_selector = '[itemprop="name codeRepository"]') {
+    return page.evaluate(
+        (selector, title_selector) => {
+            function normalize(text: string | null | undefined): string {
+                return text?.replaceAll("\n", "").trim() ?? "";
+            }
 
-        function normalize(text: string | null | undefined): string {
-            return text?.replaceAll("\n", "").trim() ?? "";
-        }
-
-        return Array.from(document.querySelectorAll(selector))
-            .map(elem => {
-                const username_and_repo = elem.querySelector('[itemprop="name codeRepository"]')?.getAttribute("href");
+            return Array.from(document.querySelectorAll(selector)).map((elem) => {
+                const username_and_repo = elem.querySelector(title_selector)?.getAttribute("href");
                 const name = username_and_repo?.split("/").pop();
                 return {
                     url: `https://github.com${username_and_repo}`,
@@ -43,14 +40,20 @@ function fetchRepos(selector: string) {
                     name: name,
                     description: normalize(elem.querySelector('[itemprop="description"]')?.textContent),
                     lang: normalize(elem.querySelector('[itemprop="programmingLanguage"]')?.textContent),
-                    lang_color: elem.querySelector(".repo-language-color")?.getAttribute("style")?.replace("background-color: ", ""),
-                    stars: normalize(elem.querySelector(".octicon-star")?.parentElement?.textContent) || "0",
-                    forks: normalize(elem.querySelector(".octicon-repo-forked")?.parentElement?.textContent) || "0",
+                    lang_color: elem
+                        .querySelector(".repo-language-color")
+                        ?.getAttribute("style")
+                        ?.replace("background-color: ", ""),
+                    stars: normalize(elem.querySelector(`a[href="${username_and_repo}/stargazers"]`)?.textContent) || "0",
+                    forks: normalize(elem.querySelector(`a[href="${username_and_repo}/forks"]`)?.textContent) || "0",
                     org_name: "",
-                    org_icon: ""
-                }
+                    org_icon: "",
+                };
             });
-    }, selector);
+        },
+        selector,
+        title_selector,
+    );
 }
 
 let repos = await fetchRepos("#user-repositories-list li.col-12");
@@ -61,26 +64,24 @@ await page.goto(github_user_url);
 console.log(`Loaded ${github_user_url}`);
 
 const orgs = await page.evaluate(() => {
-
-    return Array.from(document.querySelectorAll('[itemprop="follows"]'))
-        .map(elem => {
-            const orgName = elem.getAttribute("href");
-            const icon_img = elem.querySelector("img");
-            return {
-                repos_url: `https://github.com/orgs${orgName}/repositories`,
-                icon: icon_img?.src,
-                name: icon_img?.alt
-            }
-        });
+    return Array.from(document.querySelectorAll('[itemprop="follows"]')).map((elem) => {
+        const orgName = elem.getAttribute("href");
+        const icon_img = elem.querySelector("img");
+        return {
+            repos_url: `https://github.com/orgs${orgName}/repositories`,
+            icon: icon_img?.src,
+            name: icon_img?.alt,
+        };
+    });
 });
 
 console.log(`Fetched ${orgs.length} orgs: `);
-for (let org of orgs) {
+for (const org of orgs) {
     console.log(`Fetching ${org.name}`);
     await page.goto(org.repos_url);
-    const org_repos = await fetchRepos(".org-repos.repo-list .Box-row");
+    const org_repos = await fetchRepos('li[id*="-listview-node-"]', 'a[data-testid="listitem-title-link"]');
     console.log(`Fetched ${org_repos.length} repos from ${org.name}`);
-    for (let org_repo of org_repos) {
+    for (const org_repo of org_repos) {
         org_repo.org_name = org.name ?? "";
         org_repo.org_icon = org.icon ?? "";
     }
@@ -88,23 +89,23 @@ for (let org of orgs) {
 }
 
 type RepoData = {
-    url: string,
-    username_and_repo: string,
-    description: string,
-    lang: string,
-    lang_color: string,
-    stars: string,
-    forks: string,
-    project_name: string,
-    html_id: string,
-    icon: string | undefined,
-    thumbnail: string,
-    org_name: string | undefined,
-    org_icon: string | undefined
-}
+    url: string;
+    username_and_repo: string;
+    description: string;
+    lang: string;
+    lang_color: string;
+    stars: string;
+    forks: string;
+    project_name: string;
+    html_id: string;
+    icon: string | undefined;
+    thumbnail: string;
+    org_name: string | undefined;
+    org_icon: string | undefined;
+};
 
-const repos_full = (await Promise.allSettled(repos.map(repo => {
-    return new Promise(async (resolve, reject) => {
+const repo_tasks = repos.map((repo) => {
+    return (async () => {
         const page = await browser.newPage();
         await page.goto(repo.url, { timeout: 0 });
         console.log(`Loaded ${repo.url}`);
@@ -122,20 +123,22 @@ const repos_full = (await Promise.allSettled(repos.map(repo => {
                 html_id: project_name.toLowerCase().replaceAll(" ", "_"),
                 icon: document.querySelector("#user-content-icon")?.getAttribute("src"),
                 thumbnail: document.querySelector("#user-content-thumb")?.getAttribute("src"),
-                org_name: repo.org_name.length == 0 ? undefined : repo.org_name,
-                org_icon: repo.org_icon.length == 0 ? undefined : repo.org_icon
+                org_name: repo.org_name.length === 0 ? undefined : repo.org_name,
+                org_icon: repo.org_icon.length === 0 ? undefined : repo.org_icon,
             } as RepoData;
         }, repo);
         await page.close();
         console.log(`Closed ${repo.url}, loaded additional data`);
-        if (repo_full.icon) {
-            resolve(repo_full);
-        } else {
-            reject("Icon is null");
+        if (!repo_full.icon) {
+            throw new Error("Icon is null");
         }
-    });
-}))).filter(repo => repo.status == "fulfilled").map(repo => (repo as PromiseFulfilledResult<RepoData>).value);
+        return repo_full;
+    })();
+});
 
+const repos_full = (await Promise.allSettled(repo_tasks))
+    .filter((repo) => repo.status === "fulfilled")
+    .map((repo) => (repo as PromiseFulfilledResult<RepoData>).value);
 
 console.log(`Final repo list (${repos_full.length}), constructing page`);
 
@@ -177,12 +180,12 @@ for (const repo_data of repos_full) {
                                     <div class="icon_container repo_forks">
                                         <em class="fa fa-code-fork"></em>
                                         <span class="stats_text" id="${repo_data.html_id}_forks">${repo_data.forks}</span>
-                                    </div>`
+                                    </div>`;
     if (repo_data.org_icon) {
         htmlPage += `               <div class="icon_container repo_org">
                                         <img src="${repo_data.org_icon}" alt="org_icon">
                                         <span class="stats_text">${repo_data.org_name}</span>
-                                    </div>`
+                                    </div>`;
     }
     htmlPage += `               </div>
                             </div>
@@ -219,7 +222,3 @@ await run(`python ${genFile}`);
 await run(`bash ${scssFile}`);
 
 process.exit(0);
-
-
-
-
