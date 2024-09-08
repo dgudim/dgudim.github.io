@@ -84,12 +84,12 @@ img {
 
     margin-bottom: 30px;
 
+    box-shadow: 0 0 50px transparentize($bg2, .2);
+
     @media ($phone) {
       margin-bottom: 20px;
       margin-top: 20px;
     }
-
-    box-shadow: 0 0 50px transparentize($bg2, .2)
   }
 
   &.left {

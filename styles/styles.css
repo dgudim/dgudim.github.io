@@ -140,6 +140,7 @@
 .menu_dropdown > li a {
   display: flex;
   padding: 5px;
+  text-wrap: nowrap;
 }
 @media (max-width: 684px) {
   .menu-desktop {
