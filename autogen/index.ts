@@ -24,7 +24,10 @@ console.log("Puppeteer started");
 await page.goto(github_user_repos_url);
 console.log(`Loaded ${github_user_repos_url}`);
 
-function fetchRepos(selector: string, title_selector = '[itemprop="name codeRepository"]') {
+function fetchRepos(
+    selector: string,
+    title_selector = '[itemprop="name codeRepository"]',
+) {
     return page.evaluate(
         (selector, title_selector) => {
             function normalize(text: string | null | undefined): string {
@@ -32,20 +35,34 @@ function fetchRepos(selector: string, title_selector = '[itemprop="name codeRepo
             }
 
             return Array.from(document.querySelectorAll(selector)).map((elem) => {
-                const username_and_repo = elem.querySelector(title_selector)?.getAttribute("href");
+                const username_and_repo = elem
+                    .querySelector(title_selector)
+                    ?.getAttribute("href");
                 const name = username_and_repo?.split("/").pop();
                 return {
                     url: `https://github.com${username_and_repo}`,
                     username_and_repo: username_and_repo,
                     name: name,
-                    description: normalize(elem.querySelector('[itemprop="description"]')?.textContent),
-                    lang: normalize(elem.querySelector('[itemprop="programmingLanguage"]')?.textContent),
+                    description: normalize(
+                        elem.querySelector('[itemprop="description"]')?.textContent,
+                    ),
+                    lang: normalize(
+                        elem.querySelector('[itemprop="programmingLanguage"]')?.textContent,
+                    ),
                     lang_color: elem
                         .querySelector(".repo-language-color")
                         ?.getAttribute("style")
                         ?.replace("background-color: ", ""),
-                    stars: normalize(elem.querySelector(`a[href="${username_and_repo}/stargazers"]`)?.textContent) || "0",
-                    forks: normalize(elem.querySelector(`a[href="${username_and_repo}/forks"]`)?.textContent) || "0",
+                    stars:
+                        normalize(
+                            elem.querySelector(`a[href="${username_and_repo}/stargazers"]`)
+                                ?.textContent,
+                        ) || "0",
+                    forks:
+                        normalize(
+                            elem.querySelector(`a[href="${username_and_repo}/forks"]`)
+                                ?.textContent,
+                        ) || "0",
                     org_name: "",
                     org_icon: "",
                 };
@@ -64,22 +81,27 @@ await page.goto(github_user_url);
 console.log(`Loaded ${github_user_url}`);
 
 const orgs = await page.evaluate(() => {
-    return Array.from(document.querySelectorAll('[itemprop="follows"]')).map((elem) => {
-        const orgName = elem.getAttribute("href");
-        const icon_img = elem.querySelector("img");
-        return {
-            repos_url: `https://github.com/orgs${orgName}/repositories`,
-            icon: icon_img?.src,
-            name: icon_img?.alt,
-        };
-    });
+    return Array.from(document.querySelectorAll('[itemprop="follows"]')).map(
+        (elem) => {
+            const orgName = elem.getAttribute("href");
+            const icon_img = elem.querySelector("img");
+            return {
+                repos_url: `https://github.com/orgs${orgName}/repositories`,
+                icon: icon_img?.src,
+                name: icon_img?.alt,
+            };
+        },
+    );
 });
 
 console.log(`Fetched ${orgs.length} orgs: `);
 for (const org of orgs) {
     console.log(`Fetching ${org.name}`);
     await page.goto(org.repos_url);
-    const org_repos = await fetchRepos('li[id*="-listview-node-"]', 'a[data-testid="listitem-title-link"]');
+    const org_repos = await fetchRepos(
+        'li[id*="-list-view-node-"]',
+        'a[data-testid="listitem-title-link"]',
+    );
     console.log(`Fetched ${org_repos.length} repos from ${org.name}`);
     for (const org_repo of org_repos) {
         org_repo.org_name = org.name ?? "";
@@ -110,7 +132,10 @@ const repo_tasks = repos.map((repo) => {
         await page.goto(repo.url, { timeout: 0 });
         console.log(`Loaded ${repo.url}`);
         const repo_full = await page.evaluate((repo) => {
-            const project_name = document.querySelector("#user-content-title")?.textContent?.trim() || repo.name || "";
+            const project_name =
+                document.querySelector("#user-content-title")?.textContent?.trim() ||
+                repo.name ||
+                "";
             return {
                 url: repo.url,
                 username_and_repo: repo.username_and_repo,
@@ -122,7 +147,9 @@ const repo_tasks = repos.map((repo) => {
                 project_name: project_name,
                 html_id: project_name.toLowerCase().replaceAll(" ", "_"),
                 icon: document.querySelector("#user-content-icon")?.getAttribute("src"),
-                thumbnail: document.querySelector("#user-content-thumb")?.getAttribute("src"),
+                thumbnail: document
+                    .querySelector("#user-content-thumb")
+                    ?.getAttribute("src"),
                 org_name: repo.org_name.length === 0 ? undefined : repo.org_name,
                 org_icon: repo.org_icon.length === 0 ? undefined : repo.org_icon,
             } as RepoData;
@@ -200,7 +227,10 @@ for (const repo_data of repos_full) {
                 </a>`;
 }
 
-const outFile = path.join(__dirname, "templates/parts/projects_content.html.j2");
+const outFile = path.join(
+    __dirname,
+    "templates/parts/projects_content.html.j2",
+);
 const genFile = path.join(__dirname, "templates/render.py");
 const scssFile = path.join(__dirname, "styles/render.sh");
 
