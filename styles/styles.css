@@ -21,6 +21,151 @@
   font-weight: 800;
   src: url("../fonts/FiraCode-Bold.woff") format("woff");
 }
+.button-container {
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+button,
+.button,
+a.button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 18px;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 8;
+  border: 1px solid #8ec07c;
+  background: #8ec07c;
+  color: #282828;
+  font: inherit;
+  font-weight: bold;
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+  /* variants */
+  /* sizes */
+}
+button:hover,
+.button:hover,
+a.button:hover {
+  background: rgba(142, 192, 124, 0.85);
+}
+button:active,
+.button:active,
+a.button:active {
+  background: rgba(142, 192, 124, 0.8);
+  border: 1px solid #fabd2f;
+}
+button.outline,
+.button.outline,
+a.button.outline {
+  background: transparent;
+  box-shadow: none;
+  padding: 8px 18px;
+}
+button.outline :hover,
+.button.outline :hover,
+a.button.outline :hover {
+  transform: none;
+  box-shadow: none;
+}
+button.link,
+.button.link,
+a.button.link {
+  background: none;
+  font-size: 1rem;
+}
+button.small,
+.button.small,
+a.button.small {
+  font-size: 0.8rem;
+}
+button.wide,
+.button.wide,
+a.button.wide {
+  min-width: 200px;
+  padding: 14px 24px;
+}
+
+a.read-more,
+a.read-more:hover,
+a.read-more:active {
+  display: inline-flex;
+  border: none;
+  color: #8ec07c;
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 20px 0;
+  max-width: 100%;
+}
+
+input, textarea, select {
+  background: transparent;
+  color: #8ec07c;
+  border: 1px solid #8ec07c;
+  border-radius: 0;
+  padding: 10px;
+  font: inherit;
+  appearance: none;
+}
+input:focus, input :active, textarea:focus, textarea :active, select:focus, select :active {
+  border-color: #fabd2f;
+  outline: 0px solid transparent;
+}
+input:active, textarea:active, select:active {
+  box-shadow: none;
+}
+
+input {
+  width: 100%;
+}
+
+fieldset {
+  border: none;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  padding: 0px;
+}
+
+select {
+  background: #282828;
+}
+select option {
+  background: #282828;
+}
+
+::placeholder {
+  color: rgba(142, 192, 124, 0.5);
+}
+
+.notification-form {
+  display: flex;
+  flex-direction: column;
+}
+.notification-form span {
+  margin: auto;
+  margin-top: 5px;
+  height: 0;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  80% {
+    opacity: 0.65;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 .header {
   display: flex;
   flex-direction: column;

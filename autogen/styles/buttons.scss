@@ -12,7 +12,6 @@ a.button {
   align-items: center;
   justify-content: center;
   padding: 8px 18px;
-  margin-bottom: 5px;
   text-decoration: none;
   text-align: center;
   border-radius: 8;
@@ -26,7 +25,12 @@ a.button {
   outline: none;
 
   &:hover {
-    background: transparentize($accent, .1);
+    background: transparentize($accent, .15);
+  }
+
+  &:active {
+    background: transparentize($accent, .2);
+    border: 1px solid $accent2;
   }
 
   /* variants */

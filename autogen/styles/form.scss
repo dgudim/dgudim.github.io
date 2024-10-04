@@ -8,13 +8,25 @@ input, textarea, select {
   appearance: none;
 
   &:focus, :active {
-    border-color: $color;
-    outline: 1px solid $color;
+    border-color: $accent2;
+    outline: 0px solid transparent;
   }
 
   &:active {
     box-shadow: none;
   }
+}
+
+input {
+  width: 100%;
+}
+
+fieldset {
+  border: none;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  padding: 0px
 }
 
 select {
@@ -27,4 +39,22 @@ select {
 
 ::placeholder {
   color: transparentize($accent, .5);
+}
+
+.notification-form {
+  display: flex;
+  flex-direction: column;
+
+  span {
+    margin: auto;
+    margin-top: 5px;
+    height: 0;
+    opacity: 0
+  }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  80% { opacity: .65; }
+  100% { opacity: 0; }
 }
