@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 .terminal-content {
   @extend .framed;
 
@@ -53,7 +55,7 @@ blockquote {
 
   &.filled {
     position: relative;
-    background: transparentize($accent, .9);
+    background: color.adjust($accent, $alpha: -0.9);
     font: inherit;
     color: inherit;
     border: 1px solid $accent;
@@ -90,7 +92,7 @@ blockquote {
   &-meta {
     font-size: 1rem;
     margin-bottom: 10px;
-    color: transparentize($accent, .3);
+    color: color.adjust($accent, $alpha: -0.3);
   }
 
   &-title {
@@ -171,7 +173,7 @@ blockquote {
 }
 
 .hanchor {
-  color: transparentize($accent3, .1);
+  color: color.adjust($accent3, $alpha: -0.1);
   text-decoration: none;
   margin-left: 10px;
   visibility: hidden;
@@ -185,5 +187,5 @@ h4:hover a {
 }
 
 .footnotes {
-  color: transparentize($color, .5);
+  color: color.adjust($color, $alpha: -0.5);
 }

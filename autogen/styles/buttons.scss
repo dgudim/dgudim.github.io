@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 .button-container {
   display: table;
   margin-left: auto;
@@ -25,11 +27,11 @@ a.button {
   outline: none;
 
   &:hover {
-    background: transparentize($accent, .15);
+    background: color.adjust($accent, $alpha: -0.15);
   }
 
   &:active {
-    background: transparentize($accent, .2);
+    background: color.adjust($accent, $alpha: -0.2);
     border: 1px solid $accent2;
   }
 

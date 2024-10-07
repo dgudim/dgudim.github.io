@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 .pagination {
   margin-top: 50px;
 
@@ -16,7 +18,7 @@
       margin: 0 auto;
       padding: 5px 10px;
       background: $background;
-      color: transparentize($color, .7);
+      color: color.adjust($color, $alpha: -0.7);
       font-size: .8rem;
       text-transform: uppercase;
       text-decoration: none;

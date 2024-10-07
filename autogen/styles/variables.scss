@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 $bg_h: #1d2021;
 $bg: #282828;
 $bg_s: #32302f;
@@ -40,7 +42,7 @@ $text_invert: $bg_h;
 $background: mix($accent, $bg, 0%);
 $color: $fg;
 $border-color: $bg2;
-$shadow-color: transparentize($accent, .9);
+$shadow-color: color.adjust($accent, $alpha: -0.9);
 
 /* MEDIA QUERIES */
 $phone: "max-width: 684px";

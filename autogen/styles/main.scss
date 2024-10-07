@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 html {
   box-sizing: border-box;
 }
@@ -84,7 +86,7 @@ img {
 
     margin-bottom: 30px;
 
-    box-shadow: 0 0 50px transparentize($bg2, .2);
+    box-shadow: 0 0 50px color.adjust($bg2, $alpha: -0.2);
 
     @media ($phone) {
       margin-bottom: 20px;
@@ -154,7 +156,7 @@ code,
 kbd {
   font-family: 'Fira Code', Monaco, Consolas, Ubuntu Mono, monospace !important;
   font-feature-settings: normal;
-  background: transparentize($accent, .8);
+  background: color.adjust($accent, $alpha: -0.8);
   color: $accent;
   padding: 1px 6px;
   margin: 0 2px;
