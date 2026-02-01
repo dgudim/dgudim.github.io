@@ -1,3 +1,5 @@
+@use "variables";
+
 @use 'sass:color';
 
 .button-container {
@@ -17,9 +19,9 @@ a.button {
   text-decoration: none;
   text-align: center;
   border-radius: 8;
-  border: 1px solid $accent;
-  background: $accent;
-  color: $background;
+  border: 1px solid variables.$accent;
+  background: variables.$accent;
+  color: variables.$background;
   font: inherit;
   font-weight: bold;
   appearance: none;
@@ -27,12 +29,12 @@ a.button {
   outline: none;
 
   &:hover {
-    background: color.adjust($accent, $alpha: -0.15);
+    background: color.adjust(variables.$accent, $alpha: -0.15);
   }
 
   &:active {
-    background: color.adjust($accent, $alpha: -0.2);
-    border: 1px solid $accent2;
+    background: color.adjust(variables.$accent, $alpha: -0.2);
+    border: 1px solid variables.$accent2;
   }
 
   /* variants */
@@ -70,7 +72,7 @@ a.read-more:hover,
 a.read-more:active {
   display: inline-flex;
   border: none;
-  color: $accent;
+  color: variables.$accent;
   background: none;
   box-shadow: none;
   padding: 0;

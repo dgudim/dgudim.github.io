@@ -1,17 +1,17 @@
-@import "variables";
+@use "variables";
 
-@import "fonts";
-@import "buttons";
-@import "form";
+@use "fonts";
+@use "buttons";
+@use "form";
 
-@import "header";
-@import "menu";
-@import "logo";
-@import "main";
-@import "post";
-@import "project";
+@use "header";
+@use "menu";
+@use "logo";
+@use "main";
+@use "post";
+@use "project";
 //@import "pagination";
-@import "footer";
+@use "footer";
 
 //@import "code";
 //@import "terms";

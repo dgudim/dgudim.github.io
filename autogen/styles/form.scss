@@ -1,16 +1,18 @@
+@use "variables";
+
 @use 'sass:color';
 
 input, textarea, select {
   background: transparent;
-  color: $accent;
-  border: 1px solid $accent;
+  color: variables.$accent;
+  border: 1px solid variables.$accent;
   border-radius: 0;
   padding: 10px;
   font: inherit;
   appearance: none;
 
   &:focus, :active {
-    border-color: $accent2;
+    border-color: variables.$accent2;
     outline: 0px solid transparent;
   }
 
@@ -32,15 +34,15 @@ fieldset {
 }
 
 select {
-  background: $background;
+  background: variables.$background;
 
   option {
-    background: $background;
+    background: variables.$background;
   }
 }
 
 ::placeholder {
-  color: color.adjust($accent, $alpha: -0.5);
+  color: color.adjust(variables.$accent, $alpha: -0.5);
 }
 
 .notification-form {

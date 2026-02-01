@@ -39,7 +39,7 @@ $accent3: $purple;
 $accent4: $blue;
 $text_invert: $bg_h;
 
-$background: mix($accent, $bg, 0%);
+$background: color.mix($accent, $bg, 0%);
 $color: $fg;
 $border-color: $bg2;
 $shadow-color: color.adjust($accent, $alpha: -0.9);

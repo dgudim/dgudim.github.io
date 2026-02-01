@@ -1,8 +1,10 @@
+@use "variables";
+
 .logo {
   display: flex;
   align-items: center;
   text-decoration: none;
-  background: $accent;
+  background: variables.$accent;
   color: black;
   padding: 5px 10px;
 }

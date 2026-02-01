@@ -1,10 +1,12 @@
+@use "variables";
+
 .header {
   display: flex;
   flex-direction: column;
   position: relative;
 
   a {
-    text-decoration-color: $accent3;
+    text-decoration-color: variables.$accent3;
     text-underline-offset: 5px;
     text-decoration-style: dotted;
   }
@@ -25,7 +27,7 @@
 
     &:after {
       content: '';
-      background: repeating-linear-gradient(90deg, $accent, $accent 2px, transparent 0, transparent 10px);
+      background: repeating-linear-gradient(90deg, variables.$accent, variables.$accent 2px, transparent 0, transparent 10px);
       display: block;
       width: 100%;
       right: 10px;

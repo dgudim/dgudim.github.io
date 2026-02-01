@@ -46,8 +46,6 @@ a.button {
   appearance: none;
   cursor: pointer;
   outline: none;
-  /* variants */
-  /* sizes */
 }
 button:hover,
 .button:hover,
@@ -59,6 +57,11 @@ button:active,
 a.button:active {
   background: rgba(142, 192, 124, 0.8);
   border: 1px solid #fabd2f;
+}
+button,
+.button,
+a.button {
+  /* variants */
 }
 button.outline,
 .button.outline,
@@ -78,6 +81,11 @@ button.link,
 a.button.link {
   background: none;
   font-size: 1rem;
+}
+button,
+.button,
+a.button {
+  /* sizes */
 }
 button.small,
 .button.small,

@@ -1,3 +1,5 @@
+@use "variables";
+
 @use 'sass:color';
 
 html {
@@ -17,8 +19,8 @@ body {
   font-size: 1rem;
   line-height: 1.54;
   letter-spacing: -0.02em;
-  background-color: $background;
-  color: $color;
+  background-color: variables.$background;
+  color: variables.$color;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   font-feature-settings: "liga", "tnum", "zero", "ss01", "locl";
@@ -26,7 +28,7 @@ body {
   -webkit-overflow-scrolling: touch;
   -webkit-text-size-adjust: 100%;
 
-  @media ($phone) {
+  @media (variables.$phone) {
     font-size: 1rem;
   }
 }
@@ -63,15 +65,15 @@ a {
   color: inherit;
 
   &:has(code) {
-    text-decoration-color: $accent;
+    text-decoration-color: variables.$accent;
   }
 
   &.accent_link {
-    color: $accent3;
+    color: variables.$accent3;
   }
 
   &.social {
-    color: $accent2;
+    color: variables.$accent2;
     text-decoration: none;
   }
 }
@@ -86,9 +88,9 @@ img {
 
     margin-bottom: 30px;
 
-    box-shadow: 0 0 50px color.adjust($bg2, $alpha: -0.2);
+    box-shadow: 0 0 50px color.adjust(variables.$bg2, $alpha: -0.2);
 
-    @media ($phone) {
+    @media (variables.$phone) {
       margin-bottom: 20px;
       margin-top: 20px;
     }
@@ -134,8 +136,8 @@ figure {
     font-size: 14px;
     padding: 5px 10px;
     margin-top: 5px;
-    background: $accent;
-    color: $background;
+    background: variables.$accent;
+    color: variables.$background;
     /* opacity: .8; */
 
     &.left {
@@ -156,8 +158,8 @@ code,
 kbd {
   font-family: 'Fira Code', Monaco, Consolas, Ubuntu Mono, monospace !important;
   font-feature-settings: normal;
-  background: color.adjust($accent, $alpha: -0.8);
-  color: $accent;
+  background: color.adjust(variables.$accent, $alpha: -0.8);
+  color: variables.$accent;
   padding: 1px 6px;
   margin: 0 2px;
   font-size: .95rem;
@@ -184,7 +186,7 @@ pre {
     margin-top: -40px;
   }
 
-  @media ($phone) {
+  @media (variables.$phone) {
     white-space: pre-wrap;
     word-wrap: break-word;
   }
@@ -208,12 +210,12 @@ table {
 table,
 th,
 td {
-  border: 1px dashed $accent;
+  border: 1px dashed variables.$accent;
   padding: 10px;
 }
 
 th {
-  color: $accent;
+  color: variables.$accent;
 }
 
 ul,
@@ -225,7 +227,7 @@ ol {
     position: relative;
   }
 
-  @media ($phone) {
+  @media (variables.$phone) {
     margin-left: 20px;
   }
 }
@@ -242,7 +244,7 @@ ol {
     content: counter(li);
     position: absolute;
     right: calc(100% + 10px);
-    color: $accent;
+    color: variables.$accent;
     display: inline-block;
     text-align: right;
   }
@@ -261,8 +263,8 @@ ol {
 }
 
 mark {
-  background: $accent;
-  color: $background;
+  background: variables.$accent;
+  color: variables.$background;
 }
 
 .container {
@@ -283,7 +285,7 @@ mark {
     max-width: 100%;
   }
 
-  @media ($phone) {
+  @media (variables.$phone) {
     padding: 20px;
   }
 
@@ -299,7 +301,7 @@ mark {
 hr {
   width: 100%;
   border: none;
-  background: $border-color;
+  background: variables.$border-color;
   height: 1px;
 }
 
