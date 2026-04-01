@@ -9,7 +9,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
   if (button != undefined) {
     button.addEventListener("click", () => {
       if (input.value.length > 0) {
-        fetch("https://ntfy.sh/kloud-website-notifs", {
+        fetch("https://ntfy.kloud.home.kg/kloud-website-notifs", {
           method: "POST",
           body: input.value,
           headers: {
